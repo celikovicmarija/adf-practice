@@ -1,0 +1,42 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_linkedin_data",
+						"type": "DatasetReference"
+					},
+					"name": "srcFileLinkedinJobs"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          job_ID as integer,",
+				"          job as string,",
+				"          location as string,",
+				"          company_id as string,",
+				"          company_name as string,",
+				"          work_type as string,",
+				"          full_time_remote as string,",
+				"          no_of_employ as string,",
+				"          no_of_application as string,",
+				"          posted_day_ago as string,",
+				"          alumni as string,",
+				"          Hiring_person as string,",
+				"          linkedin_followers as string,",
+				"          hiring_person_link as string,",
+				"          job_details as string,",
+				"          Column1 as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> srcFileLinkedinJobs"
+			]
+		}
+	}
+}
