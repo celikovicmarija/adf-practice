@@ -1,5 +1,5 @@
 {
-	"name": "db_practice_linkedin_job",
+	"name": "db_practice_linkedin_jobs",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "marija_practice_db",
@@ -107,7 +107,7 @@
 		],
 		"typeProperties": {
 			"schema": "public",
-			"table": "linkedin_job_data"
+			"table": "linkedin_jobs"
 		}
 	}
 }
