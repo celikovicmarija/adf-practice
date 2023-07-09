@@ -24,6 +24,9 @@
 			"transformations": [
 				{
 					"name": "AddTimestamp"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -45,10 +48,30 @@
 				"          job_details as string,",
 				"          Column1 as string",
 				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: true,",
 				"     ignoreNoFilesFound: false) ~> srcFileLinkedinJobs",
-				"srcFileLinkedinJobs derive(date_added = currentDate()) ~> AddTimestamp",
+				"select1 derive(date_added = currentDate()) ~> AddTimestamp",
+				"srcFileLinkedinJobs select(mapColumn(",
+				"          job_ID,",
+				"          job,",
+				"          location,",
+				"          company_id,",
+				"          company_name,",
+				"          work_type,",
+				"          full_time_remote,",
+				"          no_of_employ,",
+				"          no_of_application,",
+				"          posted_day_ago,",
+				"          alumni,",
+				"          Hiring_person,",
+				"          linkedin_followers,",
+				"          hiring_person_link,",
+				"          job_details,",
+				"          Column1",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
 				"AddTimestamp sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -76,7 +99,26 @@
 				"     upsertable:false,",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> SaveToTargetDbTable"
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          job_id = job_ID,",
+				"          job,",
+				"          location,",
+				"          company_id,",
+				"          company_name,",
+				"          work_type,",
+				"          full_time_remote,",
+				"          no_of_employ,",
+				"          no_of_application,",
+				"          posted_day_ago,",
+				"          alumni,",
+				"          hiring_person = Hiring_person,",
+				"          linkedin_followers,",
+				"          hiring_person_link,",
+				"          job_details,",
+				"          column1 = Column1,",
+				"          date_added",
+				"     )) ~> SaveToTargetDbTable"
 			]
 		}
 	}
