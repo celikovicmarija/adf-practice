@@ -1,5 +1,5 @@
 {
-	"name": "pipe_move_data_to_target",
+	"name": "pipe_move_data_to_target_container",
 	"properties": {
 		"activities": [
 			{
