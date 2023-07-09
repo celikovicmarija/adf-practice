@@ -1,6 +1,265 @@
 {
 	"name": "pipe_move_data_to_db",
 	"properties": {
+		"activities": [
+			{
+				"name": "Copy from continer to db table",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzurePostgreSQLSink",
+						"writeBatchSize": 1000000,
+						"writeBatchTimeout": "00:30:00",
+						"writeMethod": "CopyCommand"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "job_ID",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "job_id",
+									"type": "Int64",
+									"physicalType": "bigint"
+								}
+							},
+							{
+								"source": {
+									"name": "job",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "job",
+									"type": "String",
+									"physicalType": "text"
+								}
+							},
+							{
+								"source": {
+									"name": "location",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "location",
+									"type": "String",
+									"physicalType": "text"
+								}
+							},
+							{
+								"source": {
+									"name": "company_id",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "company_id",
+									"type": "String",
+									"physicalType": "text"
+								}
+							},
+							{
+								"source": {
+									"name": "company_name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "company_name",
+									"type": "String",
+									"physicalType": "text"
+								}
+							},
+							{
+								"source": {
+									"name": "work_type",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "work_type",
+									"type": "String",
+									"physicalType": "text"
+								}
+							},
+							{
+								"source": {
+									"name": "full_time_remote",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "full_time_remote",
+									"type": "String",
+									"physicalType": "text"
+								}
+							},
+							{
+								"source": {
+									"name": "no_of_employ",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "no_of_employ",
+									"type": "String",
+									"physicalType": "text"
+								}
+							},
+							{
+								"source": {
+									"name": "no_of_application",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "no_of_application",
+									"type": "String",
+									"physicalType": "text"
+								}
+							},
+							{
+								"source": {
+									"name": "posted_day_ago",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "posted_day_ago",
+									"type": "String",
+									"physicalType": "text"
+								}
+							},
+							{
+								"source": {
+									"name": "alumni",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "alumni",
+									"type": "String",
+									"physicalType": "text"
+								}
+							},
+							{
+								"source": {
+									"name": "Hiring_person",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "hiring_person",
+									"type": "String",
+									"physicalType": "text"
+								}
+							},
+							{
+								"source": {
+									"name": "linkedin_followers",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "linkedin_followers",
+									"type": "String",
+									"physicalType": "text"
+								}
+							},
+							{
+								"source": {
+									"name": "hiring_person_link",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "hiring_person_link",
+									"type": "String",
+									"physicalType": "text"
+								}
+							},
+							{
+								"source": {
+									"name": "job_details",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "job_details",
+									"type": "String",
+									"physicalType": "text"
+								}
+							},
+							{
+								"source": {
+									"name": "Column1",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "column1",
+									"type": "String",
+									"physicalType": "text"
+								}
+							},
+							{
+								"source": {
+									"name": "@utcnow()"
+								},
+								"sink": {
+									"name": "date_added",
+									"type": "DateTime",
+									"physicalType": "date"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_linkedin_data",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "db_practice_linkedin_jobs",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
 		"annotations": []
 	}
 }
