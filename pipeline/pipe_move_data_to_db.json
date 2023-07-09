@@ -227,16 +227,6 @@
 									"type": "String",
 									"physicalType": "text"
 								}
-							},
-							{
-								"source": {
-									"name": "@utcnow()"
-								},
-								"sink": {
-									"name": "date_added",
-									"type": "DateTime",
-									"physicalType": "date"
-								}
 							}
 						],
 						"typeConversion": true,
