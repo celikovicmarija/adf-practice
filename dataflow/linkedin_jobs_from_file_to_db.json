@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "linkedin_jobs_from_file_to_db",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
