@@ -12,8 +12,20 @@
 					"name": "srcFileLinkedinJobs"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "target_db_linkedin_jobs",
+						"type": "DatasetReference"
+					},
+					"name": "SaveToTargetDbTable"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AddTimestamp"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          job_ID as integer,",
@@ -35,7 +47,36 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> srcFileLinkedinJobs"
+				"     ignoreNoFilesFound: false) ~> srcFileLinkedinJobs",
+				"srcFileLinkedinJobs derive(date_added = currentDate()) ~> AddTimestamp",
+				"AddTimestamp sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          job_id as long,",
+				"          job as string,",
+				"          location as string,",
+				"          company_id as string,",
+				"          company_name as string,",
+				"          work_type as string,",
+				"          full_time_remote as string,",
+				"          no_of_employ as string,",
+				"          no_of_application as string,",
+				"          posted_day_ago as string,",
+				"          alumni as string,",
+				"          hiring_person as string,",
+				"          linkedin_followers as string,",
+				"          hiring_person_link as string,",
+				"          job_details as string,",
+				"          column1 as string,",
+				"          date_added as date",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> SaveToTargetDbTable"
 			]
 		}
 	}
