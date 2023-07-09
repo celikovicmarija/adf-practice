@@ -17,6 +17,71 @@
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "job_ID",
+				"type": "String"
+			},
+			{
+				"name": "job",
+				"type": "String"
+			},
+			{
+				"name": "location",
+				"type": "String"
+			},
+			{
+				"name": "company_id",
+				"type": "String"
+			},
+			{
+				"name": "company_name",
+				"type": "String"
+			},
+			{
+				"name": "work_type",
+				"type": "String"
+			},
+			{
+				"name": "full_time_remote",
+				"type": "String"
+			},
+			{
+				"name": "no_of_employ",
+				"type": "String"
+			},
+			{
+				"name": "no_of_application",
+				"type": "String"
+			},
+			{
+				"name": "posted_day_ago",
+				"type": "String"
+			},
+			{
+				"name": "alumni",
+				"type": "String"
+			},
+			{
+				"name": "Hiring_person",
+				"type": "String"
+			},
+			{
+				"name": "linkedin_followers",
+				"type": "String"
+			},
+			{
+				"name": "hiring_person_link",
+				"type": "String"
+			},
+			{
+				"name": "job_details",
+				"type": "String"
+			},
+			{
+				"name": "Column1",
+				"type": "String"
+			}
+		]
 	}
 }
