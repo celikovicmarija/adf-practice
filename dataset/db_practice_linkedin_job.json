@@ -1,0 +1,113 @@
+{
+	"name": "db_practice_linkedin_job",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "marija_practice_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzurePostgreSqlTable",
+		"schema": [
+			{
+				"name": "job_id",
+				"type": "bigint",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "job",
+				"type": "text",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "location",
+				"type": "text",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "company_id",
+				"type": "text",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "company_name",
+				"type": "text",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "work_type",
+				"type": "text",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "full_time_remote",
+				"type": "text",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "no_of_employ",
+				"type": "text",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "no_of_application",
+				"type": "text",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "posted_day_ago",
+				"type": "text",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "alumni",
+				"type": "text",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "hiring_person",
+				"type": "text",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "linkedin_followers",
+				"type": "text",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "hiring_person_link",
+				"type": "text",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "job_details",
+				"type": "text",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "column1",
+				"type": "text",
+				"precision": 0,
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"schema": "public",
+			"table": "linkedin_job_data"
+		}
+	}
+}
