@@ -29,7 +29,10 @@
 					"name": "select1"
 				},
 				{
+					"name": "derivedColumn2"
+        },{
 					"name": "derivedColumn1"
+
 				}
 			],
 			"scriptLines": [
@@ -79,8 +82,9 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"updateDateColumn derive(t = 0) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+        "updateDateColumn derive(t = 0) ~> derivedColumn1",
+				"derivedColumn1 derive(s = 55) ~> derivedColumn2",
+				"derivedColumn2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          job_id as long,",
