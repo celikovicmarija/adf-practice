@@ -27,6 +27,9 @@
 				},
 				{
 					"name": "select1"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -54,8 +57,7 @@
 				"     validateSchema: true,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> srcDbLinkedinJobs",
-				"select1 derive(date_added = toDate(toString(date_added,\"yyyy-MM-dd\"),\"yyyy-dd-MM\")\r",
-				") ~> updateDateColumn",
+				"select1 derive(date_added = toDate(toString(date_added,\"yyyy-MM-dd\"),\"yyyy-dd-MM\")) ~> updateDateColumn",
 				"srcDbLinkedinJobs select(mapColumn(",
 				"          job_id,",
 				"          job,",
@@ -77,7 +79,8 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"updateDateColumn sink(allowSchemaDrift: true,",
+				"updateDateColumn derive(s = 55) ~> derivedColumn2",
+				"derivedColumn2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          job_id as long,",
