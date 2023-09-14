@@ -1,0 +1,110 @@
+{
+	"name": "linkedin_jobs_from_file_to_db_with_date_transformation",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "target_db_linkedin_jobs",
+						"type": "DatasetReference"
+					},
+					"name": "srcDbLinkedinJobs"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "db_practice_linkedin_jobs",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "updateDateColumn"
+				},
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          job_id as long,",
+				"          job as string,",
+				"          location as string,",
+				"          company_id as string,",
+				"          company_name as string,",
+				"          work_type as string,",
+				"          full_time_remote as string,",
+				"          no_of_employ as string,",
+				"          no_of_application as string,",
+				"          posted_day_ago as string,",
+				"          alumni as string,",
+				"          hiring_person as string,",
+				"          linkedin_followers as string,",
+				"          hiring_person_link as string,",
+				"          job_details as string,",
+				"          column1 as string,",
+				"          date_added as date,",
+				"          id as long",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: true,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> srcDbLinkedinJobs",
+				"select1 derive(date_added = toDate(toString(date_added,\"yyyy-MM-dd\"),\"yyyy-dd-MM\")\r",
+				") ~> updateDateColumn",
+				"srcDbLinkedinJobs select(mapColumn(",
+				"          job_id,",
+				"          job,",
+				"          location,",
+				"          company_id,",
+				"          company_name,",
+				"          work_type,",
+				"          full_time_remote,",
+				"          no_of_employ,",
+				"          no_of_application,",
+				"          posted_day_ago,",
+				"          alumni,",
+				"          hiring_person,",
+				"          linkedin_followers,",
+				"          hiring_person_link,",
+				"          job_details,",
+				"          column1,",
+				"          date_added",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"updateDateColumn sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          job_id as long,",
+				"          job as string,",
+				"          location as string,",
+				"          company_id as string,",
+				"          company_name as string,",
+				"          work_type as string,",
+				"          full_time_remote as string,",
+				"          no_of_employ as string,",
+				"          no_of_application as string,",
+				"          posted_day_ago as string,",
+				"          alumni as string,",
+				"          hiring_person as string,",
+				"          linkedin_followers as string,",
+				"          hiring_person_link as string,",
+				"          job_details as string,",
+				"          column1 as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

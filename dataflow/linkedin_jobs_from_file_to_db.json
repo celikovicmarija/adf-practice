@@ -1,0 +1,129 @@
+{
+	"name": "linkedin_jobs_from_file_to_db",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_linkedin_data",
+						"type": "DatasetReference"
+					},
+					"name": "srcFileLinkedinJobs"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "target_db_linkedin_jobs",
+						"type": "DatasetReference"
+					},
+					"name": "SaveToTargetDbTable"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AddTimestamp"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "filter1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          job_ID as long,",
+				"          job as string,",
+				"          location as string,",
+				"          company_id as string,",
+				"          company_name as string,",
+				"          work_type as string,",
+				"          full_time_remote as string,",
+				"          no_of_employ as string,",
+				"          no_of_application as string,",
+				"          posted_day_ago as string,",
+				"          alumni as string,",
+				"          Hiring_person as string,",
+				"          linkedin_followers as string,",
+				"          hiring_person_link as string,",
+				"          job_details as string,",
+				"          Column1 as string",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: true,",
+				"     ignoreNoFilesFound: false) ~> srcFileLinkedinJobs",
+				"select1 derive(date_added = currentDate()) ~> AddTimestamp",
+				"filter1 select(mapColumn(",
+				"          job_ID,",
+				"          job,",
+				"          location,",
+				"          company_id,",
+				"          company_name,",
+				"          work_type,",
+				"          full_time_remote,",
+				"          no_of_employ,",
+				"          no_of_application,",
+				"          posted_day_ago,",
+				"          alumni,",
+				"          Hiring_person,",
+				"          linkedin_followers,",
+				"          hiring_person_link,",
+				"          job_details,",
+				"          Column1",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"srcFileLinkedinJobs filter(isNull(job_ID) == false()) ~> filter1",
+				"AddTimestamp sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          job_id as long,",
+				"          job as string,",
+				"          location as string,",
+				"          company_id as string,",
+				"          company_name as string,",
+				"          work_type as string,",
+				"          full_time_remote as string,",
+				"          no_of_employ as string,",
+				"          no_of_application as string,",
+				"          posted_day_ago as string,",
+				"          alumni as string,",
+				"          hiring_person as string,",
+				"          linkedin_followers as string,",
+				"          hiring_person_link as string,",
+				"          job_details as string,",
+				"          column1 as string,",
+				"          date_added as date",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          job_id = job_ID,",
+				"          job,",
+				"          location,",
+				"          company_id,",
+				"          company_name,",
+				"          work_type,",
+				"          full_time_remote,",
+				"          no_of_employ,",
+				"          no_of_application,",
+				"          posted_day_ago,",
+				"          alumni,",
+				"          hiring_person = Hiring_person,",
+				"          linkedin_followers,",
+				"          hiring_person_link,",
+				"          job_details,",
+				"          column1 = Column1,",
+				"          date_added",
+				"     )) ~> SaveToTargetDbTable"
+			]
+		}
+	}
+}
