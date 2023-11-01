@@ -35,7 +35,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Repos/marija.celikovic@zuehlke.com/databricks-practice/main.py"
+					"notebookPath": "/Users/marija.celikovic@zuehlke.com/test_notebook"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureDatabricks1",
